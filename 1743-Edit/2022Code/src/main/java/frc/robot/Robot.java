@@ -26,8 +26,9 @@ import edu.wpi.first.cameraserver.CameraServer;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
+  // relay port 0 is conveyor belt, and port 0 and 1 are for the ball shooters
   private final int magnetRelayChannel = 0;
-  private final int pickupMotorChannel = 2;
+  private final int pickupMotorChannel = 1;
   private final int hopperMotorChannel = 1;
   Spark magnetRelay;
   Spark pickupMotor;
