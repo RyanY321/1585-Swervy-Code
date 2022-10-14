@@ -26,11 +26,11 @@ import edu.wpi.first.cameraserver.CameraServer;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  private static Relay magnetRelay;
   private final int magnetRelayChannel = 0;
-  //private final int pickupMotorChannel = 1;
+  private final int pickupMotorChannel = 2;
   private final int hopperMotorChannel = 1;
-  //private static Relay pickupMotor;
+  Spark magnetRelay;
+  Spark pickupMotor;
   Spark hopperMotor;
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -90,8 +90,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    //pickupMotor = new Relay(pickupMotorChannel);
-    magnetRelay = new Relay(magnetRelayChannel);
+    pickupMotor = new Spark(pickupMotorChannel);
+    magnetRelay = new Spark(magnetRelayChannel);
     hopperMotor = new Spark(hopperMotorChannel);
     //initializing the camera server
     //startAutomaticCapture = CameraServer.startAutomaticCapture();
@@ -242,14 +242,14 @@ public class Robot extends TimedRobot {
     }
     
     if (magnetState == 1) {
-    	magnetRelay.set(Relay.Value.kForward);
-      //pickupMotor.set(Relay.Value.kForward);
+    	magnetRelay.set(1.0);
+        pickupMotor.set(1.0);
     } else if (magnetState == -1) {
-    	magnetRelay.set(Relay.Value.kReverse);
-     // pickupMotor.set(Relay.Value.kReverse);
+    	magnetRelay.set(-1.0);
+        pickupMotor.set(-1.0);
     } else {
-    	magnetRelay.set(Relay.Value.kOff);
-     // pickupMotor.set(Relay.Value.kOff);
+    	magnetRelay.set(0.0);
+        pickupMotor.set(0.0);
     }
 
     /*
