@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Hardware;
-import edu.wpi.first.wpilibj.Relay;
+//import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -26,8 +26,9 @@ import edu.wpi.first.cameraserver.CameraServer;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  private static Relay magnetRelay;
-  private final int magnetRelayChannel = 0;
+  private static Spark beltMotor;
+	//move beltMotor wiring from roborio relay connection to channel 2
+  private final int beltMotorChannel = 2;
   private final int pickupMotorChannel = 0;
   private final int hopperMotorChannel = 1;
   Spark pickupMotor;
@@ -91,7 +92,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     pickupMotor = new Spark(pickupMotorChannel);
-    magnetRelay = new Relay(magnetRelayChannel);
+    beltMotor = new Spark(beltMotorChannel);
     hopperMotor = new Spark(hopperMotorChannel);
     //initializing the camera server
     //startAutomaticCapture = CameraServer.startAutomaticCapture();
@@ -222,9 +223,9 @@ public class Robot extends TimedRobot {
       System.out.println("hopper stop");
     }
     */
-    boolean forward = Hardware.controller.getRawButton(kRelayForwardButton);
+    boolean forward = Hardware.controller.getRawButton(kRelayForwardButton); //A button maybe
 
-    boolean reverse = Hardware.controller.getRawButton(kRelayReverseButton);
+    boolean reverse = Hardware.controller.getRawButton(kRelayReverseButton); //B button maybe
     
     /* Check if magnet should go forward or backward.  If both forward and back are held,
      * won't do anything.  If one of forward or back are held, will move in that direction.
@@ -242,14 +243,17 @@ public class Robot extends TimedRobot {
     }
     
     if (magnetState == 1) {
-    	magnetRelay.set(Relay.Value.kForward);
-      pickupMotor.set(Relay.Value.kForward);
+    	beltMotor.set(.1);
+      // pickupMotor.set(Relay.Value.kForward);
+	pickupMotor.set(.1);
     } else if (magnetState == -1) {
-    	magnetRelay.set(Relay.Value.kReverse);
-      pickupMotor.set(Relay.Value.kReverse);
+    	beltMotor.set(-.1);
+      // pickupMotor.set(Relay.Value.kReverse);
+	pickupMotor.set(-.1);
     } else {
-    	magnetRelay.set(Relay.Value.kOff);
-      pickupMotor.set(Relay.Value.kOff);
+    	beltMotor.set(0);
+      //pickupMotor.set(Relay.Value.kOff);
+	pickupMotor.set(0);
     }
 
     /*
