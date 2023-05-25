@@ -30,9 +30,9 @@ public class Robot extends TimedRobot {
   private final int magnetRelayChannel = 0;
   private final int pickupMotorChannel = 1;
   private final int hopperMotorChannel = 1;
-  Spark magnetRelay;
-  Spark pickupMotor;
-  Spark hopperMotor;
+  // Spark magnetRelay;
+  // Spark pickupMotor;
+  // Spark hopperMotor;
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private static final int kRelayForwardButton = 1;
@@ -91,9 +91,9 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    pickupMotor = new Spark(pickupMotorChannel);
-    magnetRelay = new Spark(magnetRelayChannel);
-    hopperMotor = new Spark(hopperMotorChannel);
+    // pickupMotor = new Spark(pickupMotorChannel);
+    // magnetRelay = new Spark(magnetRelayChannel);
+    // hopperMotor = new Spark(hopperMotorChannel);
     //initializing the camera server
     //startAutomaticCapture = CameraServer.startAutomaticCapture();
   }
@@ -197,13 +197,13 @@ public class Robot extends TimedRobot {
      Hardware.controller.getRightX()
     );
     
-    double beltSpeed1 = Hardware.controller2.getRawAxis(2);
-    double beltSpeed2 = Hardware.controller2.getRawAxis(3);
+    // double beltSpeed1 = Hardware.controller2.getRawAxis(2);
+    // double beltSpeed2 = Hardware.controller2.getRawAxis(3);
     //System.out.println("axis2: " + beltSpeed1 + "\n  axis3: "+ beltSpeed2);
     //pickupMotor.set((beltSpeed1 * -1) + beltSpeed2);
 
-    double hopperSpeed = Hardware.controller2.getRawAxis(1);
-    hopperMotor.set(hopperSpeed * 1.5);
+    // double hopperSpeed = Hardware.controller2.getRawAxis(1);
+    // hopperMotor.set(hopperSpeed * 1.5);
     /*
     boolean hopperForward = Hardware.controller.getRawButton(hopperForwardButton);
     boolean hopperReverse = Hardware.controller.getRawButton(hopperReverseButton);
@@ -223,35 +223,35 @@ public class Robot extends TimedRobot {
       System.out.println("hopper stop");
     }
     */
-    boolean forward = Hardware.controller.getRawButton(kRelayForwardButton);
+    // boolean forward = Hardware.controller.getRawButton(kRelayForwardButton);
 
-    boolean reverse = Hardware.controller.getRawButton(kRelayReverseButton);
+    // boolean reverse = Hardware.controller.getRawButton(kRelayReverseButton);
     
     /* Check if magnet should go forward or backward.  If both forward and back are held,
      * won't do anything.  If one of forward or back are held, will move in that direction.
      * If neither held, does nothing.
      */
-    if (forward && reverse) {
-    	System.out.println("magnet disabled");
-    	magnetState = 0;
-    } else if ((magnetState == 0) && (forward ^ reverse)) {
-        System.out.println("magnet enabled");
-        magnetState = (forward) ? 1 : -1;
-    } else {
-    	System.out.println("magnet disabled");
-    	magnetState = 0;
-    }
+    // if (forward && reverse) {
+    // 	System.out.println("magnet disabled");
+    // 	magnetState = 0;
+    // } else if ((magnetState == 0) && (forward ^ reverse)) {
+    //     System.out.println("magnet enabled");
+    //     magnetState = (forward) ? 1 : -1;
+    // } else {
+    // 	System.out.println("magnet disabled");
+    // 	magnetState = 0;
+    // }
     
-    if (magnetState == 1) {
-    	magnetRelay.set(1.0);
-        pickupMotor.set(1.0);
-    } else if (magnetState == -1) {
-    	magnetRelay.set(-1.0);
-        pickupMotor.set(-1.0);
-    } else {
-    	magnetRelay.set(0.0);
-        pickupMotor.set(0.0);
-    }
+    // if (magnetState == 1) {
+    // 	magnetRelay.set(1.0);
+    //     pickupMotor.set(1.0);
+    // } else if (magnetState == -1) {
+    // 	magnetRelay.set(-1.0);
+    //     pickupMotor.set(-1.0);
+    // } else {
+    // 	magnetRelay.set(0.0);
+    //     pickupMotor.set(0.0);
+    // }
 
     /*
     if (forward && reverse) {
